@@ -1,10 +1,16 @@
 package com.jupging.jupgingServer.user.domain;
 
-
 import com.jupging.jupgingServer.user.domain.enums.GenderType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class User {
 
     @Id
