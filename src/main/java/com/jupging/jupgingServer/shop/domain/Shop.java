@@ -1,5 +1,6 @@
 package com.jupging.jupgingServer.shop.domain;
 
+import com.jupging.jupgingServer.common.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Shop {
+public class Shop extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +33,4 @@ public class Shop {
     @Column(nullable = false)
     private int price;
 
-    // TODO : BaseTomeEntity 예정
 }

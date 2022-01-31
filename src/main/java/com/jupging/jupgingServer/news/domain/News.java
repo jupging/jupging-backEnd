@@ -1,5 +1,6 @@
 package com.jupging.jupgingServer.news.domain;
 
+import com.jupging.jupgingServer.common.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class News {
+public class News extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +33,4 @@ public class News {
     @Column(nullable = false)
     private String writer;
 
-    // TODO : BaseTomeEntity 예정
 }
