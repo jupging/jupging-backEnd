@@ -1,5 +1,7 @@
 package com.jupging.jupgingServer.plogging.domain;
 
+import com.jupging.jupgingServer.common.BaseTimeEntity;
+import com.jupging.jupgingServer.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,11 +9,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Plogging {
+public class Plogging extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +35,16 @@ public class Plogging {
     @Column(nullable = false)
     private Double distance;
 
-    // TODO : user 예정
-    // TODO : BaseTomeEntity 예정
+    @Column(nullable = false)
+    private int runTimeHour;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @Column(nullable = false)
+    private int runTimeMin;
+
+    @Column(nullable = false)
+    private int runTimeSec;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
