@@ -6,12 +6,14 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.Arrays;
 import java.util.Date;
 
 @Slf4j
@@ -59,7 +61,9 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        return new UsernamePasswordAuthenticationToken(getUserId(token), "", null);
+        return new UsernamePasswordAuthenticationToken(getUserId(token), "",
+            Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+        // 3번째 인자(role) null
     }
 
     public String resolveToken(HttpServletRequest request) {

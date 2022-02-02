@@ -38,6 +38,9 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private GenderType genderType;
 
+    @Column(nullable = true)
+    private String refreshToken;
+
     @Builder
     public User(String name, String email, String picture) {
         this.name = name;
@@ -50,5 +53,9 @@ public class User extends BaseTimeEntity {
         this.picture = picture;
 
         return this;
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
