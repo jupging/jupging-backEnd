@@ -1,9 +1,8 @@
-package com.jupging.jupgingServer.news.model;
+package com.jupging.jupgingServer.news.dto;
 
 
 import com.jupging.jupgingServer.news.domain.News;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
