@@ -24,7 +24,7 @@ public class ShopController {
      * 개발자 : 홍민주
      */
     @GetMapping("")
-    public BaseResponse<List<GetShopRes>> getNews(){
+    public BaseResponse<List<GetShopRes>> getShops(){
         List<GetShopRes> shopList = shopService.findShops();
         return new BaseResponse<>(shopList);
     }
