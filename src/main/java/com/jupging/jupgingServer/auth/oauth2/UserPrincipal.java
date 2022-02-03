@@ -26,11 +26,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     }
 
     @Override
-    public String getName() {
-        return String.valueOf(user.getId());
-    }
-
-    @Override
     public boolean isAccountNonExpired() {
         return false;
     }
@@ -57,6 +52,11 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getName() {
         return null;
     }
 

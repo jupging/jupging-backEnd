@@ -38,12 +38,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         User user = saveOrUpdate(attributes);
 
-        return new DefaultOAuth2User(
-            //Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
-            null,
-            attributes.getAttributes(),
-            attributes.getNameAttributeKey()
-        );
+        return UserPrincipal.of(user);
+//        return new DefaultOAuth2User(
+//            //Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
+//            null,
+//            attributes.getAttributes(),
+//            attributes.getNameAttributeKey()
+//        );
     }
 
     private User saveOrUpdate(OAuthAttributes attributes) {
@@ -51,7 +52,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                         .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                         .orElse(attributes.toEntity());
 
-        user.updateRefreshToken(jwtProvider.createRefreshToken());
         return userRepository.save(user);
     }
 }

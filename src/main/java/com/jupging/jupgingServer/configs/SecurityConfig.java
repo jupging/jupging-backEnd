@@ -35,19 +35,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/auth/sign-in", "/auth/sign-up").permitAll()
             .anyRequest().authenticated()
             .and()
+            .addFilterBefore(
+                new JwtFilter(jwtProvider),
+                UsernamePasswordAuthenticationFilter.class
+            )
         .oauth2Login()
             .authorizationEndpoint()
                 .baseUri("/oauth2/authorize")
                 .and()
+//            .redirectionEndpoint()
+//                .baseUri("/*/oauth2/code/*")
+//                .and()
             .userInfoEndpoint()
                 .userService(oAuth2UserService)
                 .and()
             .successHandler(oAuth2AuthenticationSuccessHandler);
-
-        http.addFilterBefore(
-            new JwtFilter(jwtProvider),
-            UsernamePasswordAuthenticationFilter.class
-        );
     }
 
     @Bean

@@ -3,9 +3,11 @@ package com.jupging.jupgingServer.auth.oauth2;
 import com.jupging.jupgingServer.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
+@NoArgsConstructor
 @Getter
 public class OAuthAttributes {
 

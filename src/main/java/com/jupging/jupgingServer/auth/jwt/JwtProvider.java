@@ -1,9 +1,8 @@
 package com.jupging.jupgingServer.auth.jwt;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -20,14 +17,15 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
-    private final Key key;
+    private final String key;
 
     private final static Long ACCESS_TOKEN_EXPIRE_TIME = 60 * 60 * 1000L;
     private final static Long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;
 
-    public JwtProvider(@Value("${jwt.secret}") String secretKey) {
-        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
+    public JwtProvider(@Value("${spring.jwt.secret}") String secretKey) {
+//        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+//        this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.key = secretKey;
     }
 
     public String createAccessToken(Long userId) {
@@ -38,7 +36,7 @@ public class JwtProvider {
             .setClaims(claims)
             .setIssuedAt(now)
             .setExpiration(new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME))
-            .signWith(key, SignatureAlgorithm.HS256)
+            .signWith(SignatureAlgorithm.HS512, key)
             .compact();
     }
 
@@ -48,7 +46,7 @@ public class JwtProvider {
         return Jwts.builder()
             .setIssuedAt(now)
             .setExpiration(new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_TIME))
-            .signWith(key, SignatureAlgorithm.HS256)
+            .signWith(SignatureAlgorithm.HS512, key)
             .compact();
     }
 
