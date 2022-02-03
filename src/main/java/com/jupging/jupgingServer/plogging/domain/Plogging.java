@@ -2,10 +2,7 @@ package com.jupging.jupgingServer.plogging.domain;
 
 import com.jupging.jupgingServer.common.BaseTimeEntity;
 import com.jupging.jupgingServer.user.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -47,4 +44,19 @@ public class Plogging extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Builder
+    public Plogging(String routeImage, String trashImage, Double distance,
+                    int calorie, int avgPaceMin, int avgPaceSec,
+                    int runTimeHour, int runTimeMin, int runTimeSec){
+        this.routeImage = routeImage;
+        this.trashImage = trashImage;
+        this.distance = distance;
+        this.calorie = calorie;
+        this.avgPaceMin = avgPaceMin;
+        this.avgPaceSec = avgPaceSec;
+        this.runTimeHour = runTimeHour;
+        this.runTimeMin = runTimeMin;
+        this.runTimeSec = runTimeSec;
+    }
 }
