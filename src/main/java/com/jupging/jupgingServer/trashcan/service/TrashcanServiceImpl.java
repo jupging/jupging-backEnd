@@ -26,7 +26,6 @@ public class TrashcanServiceImpl implements TrashcanService{
     @Override
     @Transactional(readOnly = true)
     public List<GetTrashcanRes> findTrashcans(){
-        // TODO : JWT 검사 필요
         List<Trashcan> trashcanList = trashcanRepository.findAll();
         List<GetTrashcanRes> trashcanDtoList = new ArrayList<>();
         for (Trashcan trashcan : trashcanList)
