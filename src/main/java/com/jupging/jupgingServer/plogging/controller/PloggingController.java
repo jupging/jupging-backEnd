@@ -5,6 +5,7 @@ import com.jupging.jupgingServer.common.GCSuploader;
 import com.jupging.jupgingServer.plogging.dto.PostPloggingReq;
 import com.jupging.jupgingServer.plogging.dto.PostPloggingRes;
 import com.jupging.jupgingServer.plogging.service.PloggingServiceImpl;
+import com.jupging.jupgingServer.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +26,9 @@ public class PloggingController {
      */
     @PostMapping("")
     public BaseResponse<PostPloggingRes> postPlogging(@ModelAttribute PostPloggingReq postPloggingReq) throws Exception{
-        // TODO : jwt 확인
         // TODO : ServletException, GoogleJsonResponseException 예외 처리 (merge후 ControllerAdvice에서 예외처리할 예정)
-        PostPloggingRes postPloggingRes = ploggingService.savePlogging(postPloggingReq);
+        User user = null; // TODO : jwt 확인 예정
+        PostPloggingRes postPloggingRes = ploggingService.savePlogging(user, postPloggingReq);
         return new BaseResponse<>(postPloggingRes);
     }
 }
