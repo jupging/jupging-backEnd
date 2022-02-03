@@ -4,8 +4,10 @@ import com.jupging.jupgingServer.trashcan.domain.Trashcan;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TrashcanRepository extends JpaRepository<Trashcan, Long> {
 
+    Optional<Trashcan> findByLatitudeAndLongitude(Double latitude, Double longitude);
     List<Trashcan> findAll();
 }
