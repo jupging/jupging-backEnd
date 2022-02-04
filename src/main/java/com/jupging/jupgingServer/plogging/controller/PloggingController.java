@@ -18,6 +18,7 @@ import java.util.List;
 public class PloggingController {
 
     private final PloggingServiceImpl ploggingService;
+
     private static final String YEAR_MONTH_FORMAT = "yyyy-MM";
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern(YEAR_MONTH_FORMAT);
 
@@ -44,5 +45,17 @@ public class PloggingController {
         String YearMonth = LocalDateTime.now().format(dtf);
         GetRankRes getRankRes = ploggingService.getRank(user, YearMonth, sort);
         return new BaseResponse<>(getRankRes);
+    }
+
+    /**
+     * 플로깅 랭크 조회 API
+     * [GET] /ploggings/{userId}
+     * 개발자 : 홍민주
+     */
+    @GetMapping("/{userId}")
+    public BaseResponse<GetPloggingStatRes> getPloggingStat(@PathVariable Long userId) throws Exception{
+        // TODO : jwt 확인 예정
+        GetPloggingStatRes ploggingStatRes = ploggingService.getPloggingStat(userId);
+        return new BaseResponse<>(ploggingStatRes);
     }
 }
