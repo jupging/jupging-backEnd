@@ -26,7 +26,7 @@ public class BadgeService {
     public GetBadgeRes findBadge(Long userId) {
         List<Badge> badgeList = badgeRepository.findByUserId(userId);
         List<Integer> badges= new ArrayList<>(
-            Collections.nCopies(9, 0));
+            Collections.nCopies(11, 0));
 
         for(Badge badge : badgeList) {
             badges.remove(badge.getId().intValue());

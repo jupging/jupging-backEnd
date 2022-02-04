@@ -19,13 +19,13 @@ public class BadgeController {
     private final BadgeService badgeService;
 
     @GetMapping("/{userId}/badge")
-    public BaseResponse<GetBadgeRes> getBadge(@PathVariable Long userId, @LoginUser User user) {
+    public BaseResponse<GetBadgeRes> getBadge(@PathVariable Long userId, @LoginUser String name) {
         GetBadgeRes getBadgeRes = badgeService.findBadge(userId);
         return new BaseResponse<>(getBadgeRes);
     }
 
     @PutMapping("/{userId}/badge")
-    public void putBadge(@PathVariable Long userId, @LoginUser User user,
+    public void putBadge(@PathVariable Long userId, @LoginUser String name,
                          @RequestBody PutBadgeReq putBadgeReq) {
         badgeService.putBadge(userId, putBadgeReq);
 

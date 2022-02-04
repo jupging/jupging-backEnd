@@ -4,11 +4,13 @@ import com.jupging.jupgingServer.common.BaseTimeEntity;
 import com.jupging.jupgingServer.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class Like extends BaseTimeEntity {
 
     @Id

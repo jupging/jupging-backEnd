@@ -1,11 +1,15 @@
 package com.jupging.jupgingServer.auth.jwt;
 
+import com.jupging.jupgingServer.user.domain.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -22,7 +26,9 @@ public class JwtProvider {
     private String secretKey;
 
     private final static Long ACCESS_TOKEN_EXPIRE_TIME = 60 * 60 * 1000L;
-    private final static Long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     public JwtProvider(@Value("${spring.jwt.secret}") String secretKey) {
         this.secretKey = secretKey;
@@ -54,8 +60,8 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        return new UsernamePasswordAuthenticationToken(getUserId(token), "",
-            Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
+        return new UsernamePasswordAuthenticationToken(getUserId(token), "", userDetails.getAuthorities());
     }
 
     public String resolveToken(HttpServletRequest request) {
@@ -83,9 +89,12 @@ public class JwtProvider {
     }
 
     public boolean validationToken(String token) {
-        return parseClaims(token)
-            .getExpiration()
-            .after(new Date());
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import com.jupging.jupgingServer.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
         .authorizeRequests()
             .antMatchers("/auth/sign-in", "/auth/sign-up", "/news", "/shop").permitAll()
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
+            //.anyRequest().authenticated()
             .and()
             .addFilterBefore(
                 new JwtFilter(jwtProvider),
@@ -51,4 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 }
+
