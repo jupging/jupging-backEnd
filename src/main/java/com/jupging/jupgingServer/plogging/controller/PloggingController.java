@@ -49,12 +49,12 @@ public class PloggingController {
 
     /**
      * 플로깅 랭크 조회 API
-     * [GET] /ploggings/ranks
+     * [GET] /ploggings/{userId}
      * 개발자 : 홍민주
      */
-    @GetMapping("/rank")
-    public BaseResponse<GetPloggingStatRes> getPloggingStat() throws Exception{
-        Long userId = 1L; // TODO : jwt 확인 예정
+    @GetMapping("/{userId}")
+    public BaseResponse<GetPloggingStatRes> getPloggingStat(@PathVariable Long userId) throws Exception{
+        // TODO : jwt 확인 예정
         GetPloggingStatRes ploggingStatRes = ploggingService.getPloggingStat(userId);
         return new BaseResponse<>(ploggingStatRes);
     }

@@ -88,6 +88,14 @@ public class PloggingServiceImpl implements PloggingService{
 
     @Override
     public GetPloggingStatRes getPloggingStat(Long userId){
-
+        GetPloggingStatRes ploggingStatRes = new GetPloggingStatRes();
+        List<Plogging> ploggingList = ploggingRepository.findByUserId(userId);
+        List<PloggingInfo> ploggingInfoList = new ArrayList<>();
+        for (Plogging plogging: ploggingList){
+            ploggingStatRes.sumTotalInfo(plogging.getDistance(), plogging.getCalorie(), plogging.getRunTimeMin(), plogging.getRunTimeSec());
+            ploggingInfoList.add(new PloggingInfo(plogging));
+        }
+        ploggingStatRes.setPloggingList(ploggingInfoList);
+        return ploggingStatRes;
     }
 }

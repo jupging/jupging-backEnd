@@ -1,9 +1,7 @@
 package com.jupging.jupgingServer.plogging.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.jupging.jupgingServer.plogging.domain.Plogging;
+import lombok.*;
 
 @Getter
 @Setter
@@ -17,4 +15,13 @@ public class PloggingInfo {
     private int calorie;
     private int minute;
     private int second;
+
+    public PloggingInfo(Plogging plogging){
+        this.routeImage = plogging.getRouteImage();
+        this.createdDate = plogging.getCreatedDate().toString();
+        this.distance = plogging.getDistance();
+        this.calorie = plogging.getCalorie();
+        this.minute = (plogging.getRunTimeHour()) * 60 + plogging.getRunTimeMin();
+        this.second = plogging.getRunTimeSec();
+    }
 }
