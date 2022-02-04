@@ -50,7 +50,7 @@ public class JwtProvider {
     }
 
     public Claims parseClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
     public Authentication getAuthentication(String token) {
@@ -68,9 +68,9 @@ public class JwtProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+        } catch (MalformedJwtException e) {
             log.info("잘못된 형식의 Jwt 토큰입니다.", e);
         } catch (ExpiredJwtException e) {
             log.info("만료된 Jwt 토큰입니다.", e);

@@ -20,14 +20,17 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String email;
 
     @Column(nullable = true)
     private String picture;
+
+    @Column(nullable = true)
+    private String nickName;
 
     @Column(nullable = true)
     private Float height;
@@ -42,21 +45,28 @@ public class User extends BaseTimeEntity {
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    Set<Like> likes = new HashSet<>();
 
-    @Transient
-    private long likesCount;
+//    @Transient
+//    private long likesCount;
+//
+//    @Transient
+//    private boolean likesState;
 
-    @Transient
-    private boolean likesState;
-
-    @Builder
-    public User(String name, String email, String picture) {
+    public User(String name, String email, String picture, Float height, Float weight, GenderType genderType) {
         this.name = name;
         this.email = email;
         this.picture = picture;
+        this.height = height;
+        this.weight = weight;
+        this.genderType = genderType;
     }
 
-    public User update(String name, String picture) {
+    public User(String name, String email) {
         this.name = name;
+        this.email = email;
+    }
+
+    public User update(String nickName, String picture) {
+        this.nickName = nickName;
         this.picture = picture;
 
         return this;
@@ -71,11 +81,11 @@ public class User extends BaseTimeEntity {
         this.genderType = gender;
     }
 
-    public void updateLikesCount(Long likesCount) {
-        this.likesCount = likesCount;
-    }
-
-    public void updateLikesState(boolean likesState) {
-        this.likesState = likesState;
-    }
+//    public void updateLikesCount(Long likesCount) {
+//        this.likesCount = likesCount;
+//    }
+//
+//    public void updateLikesState(boolean likesState) {
+//        this.likesState = likesState;
+//    }
 }
