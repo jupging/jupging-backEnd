@@ -1,5 +1,6 @@
 package com.jupging.jupgingServer.user.domain;
 
+import com.jupging.jupgingServer.like.entity.Like;
 import com.jupging.jupgingServer.common.BaseTimeEntity;
 import com.jupging.jupgingServer.user.domain.enums.GenderType;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -16,13 +18,13 @@ import javax.persistence.*;
 public class User extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String email;
 
     @Column(nullable = true)
@@ -38,8 +40,14 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private GenderType genderType;
 
-    @Column(nullable = true)
-    private String refreshToken;
+    @OneToMany(mappedBy = "user")
+    private List<Like> likeList;
+
+    @Transient
+    private long likesCount;
+
+    @Transient
+    private boolean likesState;
 
     @Builder
     public User(String name, String email, String picture) {
@@ -55,7 +63,20 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
-    public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+    public void update(String nickName, String profile,
+                       Float height, Float weight, GenderType gender) {
+        this.name = nickName;
+        this.picture = profile;
+        this.height = height;
+        this.weight = weight;
+        this.genderType = gender;
+    }
+
+    public void updateLikesCount(Long likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public void updateLikesState(boolean likesState) {
+        this.likesState = likesState;
     }
 }
