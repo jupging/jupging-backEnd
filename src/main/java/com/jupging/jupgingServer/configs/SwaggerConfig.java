@@ -23,7 +23,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("하이급식 API 문서")
+            .title("Jupging API 문서")
             .build();
     }
 
