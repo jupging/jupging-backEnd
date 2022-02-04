@@ -1,6 +1,5 @@
 package com.jupging.jupgingServer.user.controller;
 
-import com.jupging.jupgingServer.auth.annotation.LoginUser;
 import com.jupging.jupgingServer.common.BaseResponse;
 import com.jupging.jupgingServer.user.domain.User;
 import com.jupging.jupgingServer.user.dto.PutUserInfoReq;
@@ -23,8 +22,8 @@ public class UserController {
         userService.putUserInfo(userId, putUserInfoReq);
     }
 
-    @GetMapping("/{userId}/info")
-    public BaseResponse<GetUserInfoRes> getUserInfo(@PathVariable Long userId)
+//    @GetMapping("/{userId}/info")
+//    public BaseResponse<GetUserInfoRes> getUserInfo(@PathVariable Long userId)
 
 
 }

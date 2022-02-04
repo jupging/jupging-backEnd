@@ -16,16 +16,10 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PutMapping("/sign-up")
-    public BaseResponse<SignUpRes> signup(@RequestBody SignUpReq signUpReq) {
-        // TODO : JWT 인증
-        // loginUser : Long? User?
-        SignUpRes signUpRes = authService.signUp(loginUser, signUpReq);
-    }
-
-    @PostMapping("/reissue")
-    public BaseResponse<TokenRes> reissue(RefreshTokenReq RefreshtokenReq) {
-        TokenRes tokenRes = authService.reissue(RefreshtokenReq);
-        return new BaseResponse<>(tokenRes);
-    }
+//    @PutMapping("/sign-up")
+//    public BaseResponse<SignUpRes> signup(@RequestBody SignUpReq signUpReq) {
+//        // TODO : JWT 인증
+//        // loginUser : Long? User?
+//        SignUpRes signUpRes = authService.signUp(loginUser, signUpReq);
+//    }
 }

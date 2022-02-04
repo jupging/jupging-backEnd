@@ -2,8 +2,6 @@ package com.jupging.jupgingServer.configs;
 
 import com.jupging.jupgingServer.auth.jwt.JwtFilter;
 import com.jupging.jupgingServer.auth.jwt.JwtProvider;
-import com.jupging.jupgingServer.auth.oauth2.CustomOAuth2UserService;
-import com.jupging.jupgingServer.auth.oauth2.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final CustomOAuth2UserService oAuth2UserService;
     private final JwtProvider jwtProvider;
-    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,19 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/auth/sign-in", "/auth/sign-up").permitAll()
             .anyRequest().authenticated()
             .and()
-        .oauth2Login()
-            .authorizationEndpoint()
-                .baseUri("/oauth2/authorize")
-                .and()
-            .userInfoEndpoint()
-                .userService(oAuth2UserService)
-                .and()
-            .successHandler(oAuth2AuthenticationSuccessHandler);
-
-        http.addFilterBefore(
-            new JwtFilter(jwtProvider),
-            UsernamePasswordAuthenticationFilter.class
-        );
+            .addFilterBefore(
+                new JwtFilter(jwtProvider),
+                UsernamePasswordAuthenticationFilter.class
+            );
     }
 
     @Bean

@@ -1,6 +1,5 @@
 package com.jupging.jupgingServer.user.dto;
 
-import com.nimbusds.openid.connect.sdk.claims.Gender;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 

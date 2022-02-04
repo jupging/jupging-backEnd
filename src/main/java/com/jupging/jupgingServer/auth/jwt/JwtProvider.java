@@ -2,8 +2,8 @@ package com.jupging.jupgingServer.auth.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,35 +25,25 @@ public class JwtProvider {
     private final static Long ACCESS_TOKEN_EXPIRE_TIME = 60 * 60 * 1000L;
     private final static Long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;
 
-    public JwtProvider(@Value("${jwt.secret}") String secretKey) {
+    public JwtProvider(@Value("${spring.jwt.secret}") String secretKey) {
         byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createAccessToken(Long userId) {
+    public String createToken(String userId) {
         Date now = new Date();
-        Claims claims = Jwts.claims().setSubject(String.valueOf(userId));
+        Claims claims = Jwts.claims().setSubject(userId);
 
         return Jwts.builder()
             .setClaims(claims)
             .setIssuedAt(now)
             .setExpiration(new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME))
-            .signWith(key, SignatureAlgorithm.HS256)
+            .signWith(key, SignatureAlgorithm.HS512)
             .compact();
     }
 
-    public String createRefreshToken() {
-        Date now = new Date();
-
-        return Jwts.builder()
-            .setIssuedAt(now)
-            .setExpiration(new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_TIME))
-            .signWith(key, SignatureAlgorithm.HS256)
-            .compact();
-    }
-
-    public Long getUserId(String token) {
-        return Long.parseLong(parseClaims(token).getSubject());
+    public String getUserId(String token) {
+        return parseClaims(token).getSubject();
     }
 
     public Claims parseClaims(String token) {
@@ -63,7 +53,6 @@ public class JwtProvider {
     public Authentication getAuthentication(String token) {
         return new UsernamePasswordAuthenticationToken(getUserId(token), "",
             Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
-        // 3번째 인자(role) null
     }
 
     public String resolveToken(HttpServletRequest request) {
@@ -91,7 +80,9 @@ public class JwtProvider {
     }
 
     public boolean validationToken(String token) {
-        return parseClaims(token).getExpiration().after(new Date());
+        return parseClaims(token)
+            .getExpiration()
+            .after(new Date());
     }
 
 }

@@ -4,7 +4,6 @@ import com.jupging.jupgingServer.user.domain.User;
 import com.jupging.jupgingServer.user.domain.enums.GenderType;
 import com.jupging.jupgingServer.user.dto.PutUserInfoReq;
 import com.jupging.jupgingServer.user.repository.UserRepository;
-import com.nimbusds.openid.connect.sdk.claims.Gender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

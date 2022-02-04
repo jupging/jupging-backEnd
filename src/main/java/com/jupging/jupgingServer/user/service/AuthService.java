@@ -27,21 +27,4 @@ public class AuthService {
         user.update(signUpReq.getNickName(), signUpReq.getProfile());
         return new SignUpRes(user.getId());
     }
-
-    // exception 처리 수정 필요
-    public TokenRes reissue(RefreshTokenReq dto) {
-        String refreshToken = dto.getRefreshToken();
-        if(!jwtProvider.validateToken(refreshToken));
-            // throw new RuntimeException("잘못된 refreshToken");
-
-        User user = userRepository.findByRefreshToken(refreshToken)
-            .orElseThrow(() -> new RuntimeException("잘못된 refresh Token"));
-
-        String newRefreshToken = jwtProvider.createRefreshToken();
-        user.updateRefreshToken(newRefreshToken);
-        String newAccessToken = jwtProvider.createAccessToken(user.getId());
-
-        return new TokenRes(newAccessToken, newRefreshToken);
-
-    }
 }
