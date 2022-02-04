@@ -37,14 +37,16 @@ public enum BaseResponseStatus {
     DATABASE_ERROR(false, 4000, "데이터베이스 연결에 실패하였습니다."),
     SERVER_ERROR(false, 4001, "서버와의 연결에 실패하였습니다."),
     DUPLICATE_KEY_ERROR(false, 4002, "이미 존재하는 row입니다."),
+    EMPTY_USER(false, 4003, "user를 찾지 못했습니다."),
 
 
     /**
      * 5000 : File 오류
      */
     FILE_CONVERT_ERROR(false, 5000, "file 변환에 실패하였습니다."),
-    FILE_EMPTY(false, 5001, "file이 없습니다.");
-
+    FILE_EMPTY(false, 5001, "file이 없습니다."),
+    GCS_ERROR(false, 5002, "GCS통신 오류"),
+    FILE_EXTENSION_ERROR(false, 5003, "file 확장자를 확인해주세요.");
 
     private final boolean isSuccess;
     private final int code;
