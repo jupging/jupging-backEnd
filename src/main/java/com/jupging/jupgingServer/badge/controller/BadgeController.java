@@ -1,13 +1,13 @@
 package com.jupging.jupgingServer.badge.controller;
 
+import com.jupging.jupgingServer.auth.annotation.LoginUser;
 import com.jupging.jupgingServer.badge.dto.GetBadgeRes;
+import com.jupging.jupgingServer.badge.dto.PutBadgeReq;
 import com.jupging.jupgingServer.badge.service.BadgeService;
 import com.jupging.jupgingServer.common.BaseResponse;
+import com.jupging.jupgingServer.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,9 +19,15 @@ public class BadgeController {
     private final BadgeService badgeService;
 
     @GetMapping("/{userId}/badge")
-    public BaseResponse<List<GetBadgeRes>> getBadge(@PathVariable Long userId) {
-        // TODO : jwt 인증필요
-        List<GetBadgeRes> badgeList = badgeService.findBadge(userId);
-        return new BaseResponse<>(badgeList);
+    public BaseResponse<GetBadgeRes> getBadge(@PathVariable Long userId, @LoginUser User user) {
+        GetBadgeRes getBadgeRes = badgeService.findBadge(userId);
+        return new BaseResponse<>(getBadgeRes);
+    }
+
+    @PutMapping("/{userId}/badge")
+    public void putBadge(@PathVariable Long userId, @LoginUser User user,
+                         @RequestBody PutBadgeReq putBadgeReq) {
+        badgeService.putBadge(userId, putBadgeReq);
+
     }
 }
