@@ -1,7 +1,7 @@
 package com.jupging.jupgingServer.auth.annotation;
 
 import com.jupging.jupgingServer.user.domain.User;
-import com.jupging.jupgingServer.user.domain.UserDetailsImpl;
+//import com.jupging.jupgingServer.user.domain.UserDetailsImpl;
 import com.jupging.jupgingServer.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

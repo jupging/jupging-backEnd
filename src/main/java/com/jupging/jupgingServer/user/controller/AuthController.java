@@ -1,8 +1,8 @@
 package com.jupging.jupgingServer.user.controller;
 
-import com.jupging.jupgingServer.auth.annotation.LoginUser;
+import com.jupging.jupgingServer.auth.jwt.JwtProvider;
+import com.jupging.jupgingServer.common.BaseException;
 import com.jupging.jupgingServer.common.BaseResponse;
-import com.jupging.jupgingServer.user.domain.User;
 import com.jupging.jupgingServer.user.dto.*;
 import com.jupging.jupgingServer.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtProvider jwtProvider;
 
     @PostMapping("/sign-in")
     public BaseResponse<SignInRes> signIn(@RequestBody SignInReq signInReq) {
@@ -22,15 +23,16 @@ public class AuthController {
     }
 
     @PutMapping("/sign-up")
-    public BaseResponse<SignUpRes> signUp(@RequestBody SignUpReq signUpReq, @LoginUser String name) {
-        // TODO : JWT 인증
-        SignUpRes signUpRes = authService.signUp(name, signUpReq);
+    public BaseResponse<SignUpRes> signUp(@RequestBody SignUpReq signUpReq) throws BaseException {
+        Long userId = jwtProvider.getUserIdx();
+        SignUpRes signUpRes = authService.signUp(userId, signUpReq);
         return new BaseResponse<>(signUpRes);
     }
 
     @DeleteMapping("/sign-out")
-    public BaseResponse<SignOutRes> signOut(@LoginUser String name) {
-        SignOutRes signOutRes = authService.signOut(name);
+    public BaseResponse<SignOutRes> signOut() throws BaseException  {
+        Long userId = jwtProvider.getUserIdx();
+        SignOutRes signOutRes = authService.signOut(userId);
         return new BaseResponse<>(signOutRes);
     }
 }

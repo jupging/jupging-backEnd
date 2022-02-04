@@ -56,7 +56,7 @@ public class PloggingServiceImpl implements PloggingService{
         List<RankInfo> ploggingDtoList = new ArrayList<>();
         getRankRes.setRankList(ploggingDtoList);
         // myRank 초기화
-        getRankRes.setMyRank(new RankInfo(-1, user.getId(), user.getName(), user.getPicture()));
+        getRankRes.setMyRank(new RankInfo(-1, user.getId(), user.getNickName(), user.getPicture()));
 
         int userIdx = -1;
         List<RankInfoProjection> ploggingList = ploggingRepository.findPloggingRankByCreatedDateWithPagination(YearMonth, PageRequest.of(0, 50, Sort.Direction.DESC, sort));
@@ -71,7 +71,7 @@ public class PloggingServiceImpl implements PloggingService{
 
             User runner = optionalRunner.get();
             // ploggingDtoList에 추가하기 위한 RankInfo 생성
-            RankInfo rank = new RankInfo(idx + 1,runner.getId(), runner.getName(), runner.getPicture(), projection.getCnt().intValue(), projection.getDistance());
+            RankInfo rank = new RankInfo(idx + 1,runner.getId(), runner.getNickName(), runner.getPicture(), projection.getCnt().intValue(), projection.getDistance());
             ploggingDtoList.add(rank);
 
             // 만약 자신의 plogging rank인 경우 저장

@@ -18,29 +18,28 @@ public class AuthService {
     private final UserRepository userRepository;
 
     public SignInRes signIn(SignInReq signInReq) {
-        String userName = signInReq.getEmail().split("@")[0];
-        String accessToken = jwtProvider.createToken(userName);
-        boolean isNew = false;
         User user = userRepository.findByEmail(signInReq.getEmail());
+
+        boolean isNew = false;
         if(user == null) {
-            user = userRepository.save(new User(
-                userName, signInReq.getEmail()));
+            user = userRepository.save(new User(signInReq.getEmail()));
             isNew = true;
         }
 
+        String accessToken = jwtProvider.createJwt(user.getId());
         return new SignInRes(user.getId(), accessToken, isNew);
     }
 
-    public SignUpRes signUp(String name, SignUpReq signUpReq) {
-        User user = userRepository.findByName(name).orElseThrow();
+    public SignUpRes signUp(Long userId, SignUpReq signUpReq) {
+        User user = userRepository.findById(userId).orElseThrow();
         User updateUser = user.update(signUpReq.getNickName(), signUpReq.getProfile());
         User saveUser = userRepository.save(updateUser);
 
         return new SignUpRes(saveUser.getId());
     }
 
-    public SignOutRes signOut(String name) {
-        User user = userRepository.findByName(name).orElseThrow();
+    public SignOutRes signOut(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
         userRepository.delete(user);
         return new SignOutRes(userRepository.findAll());
     }

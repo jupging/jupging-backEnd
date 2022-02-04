@@ -23,8 +23,6 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
 
     @Column(nullable = false)
     private String email;
@@ -54,8 +52,8 @@ public class User extends BaseTimeEntity {
     @Column(nullable = true)
     private int level;
 
-    public User(String name, String email, String picture, Float height, Float weight, GenderType genderType) {
-        this.name = name;
+    public User( String email, String picture, Float height, Float weight, GenderType genderType) {
+
         this.email = email;
         this.picture = picture;
         this.height = height;
@@ -63,15 +61,13 @@ public class User extends BaseTimeEntity {
         this.genderType = genderType;
     }
 
-    public User(String name, String email) {
-        this.name = name;
+    public User(String email) {
         this.email = email;
     }
 
     public User update(String nickName, String picture) {
         this.nickName = nickName;
         this.picture = picture;
-
         return this;
     }
 
@@ -81,7 +77,7 @@ public class User extends BaseTimeEntity {
 
     public void update(String nickName, String profile,
                        Float height, Float weight, GenderType gender) {
-        this.name = nickName;
+        this.nickName = nickName;
         this.picture = profile;
         this.height = height;
         this.weight = weight;

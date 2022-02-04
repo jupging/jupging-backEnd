@@ -1,6 +1,6 @@
 package com.jupging.jupgingServer.configs;
 
-import com.jupging.jupgingServer.auth.jwt.JwtFilter;
+//import com.jupging.jupgingServer.auth.jwt.JwtFilter;
 import com.jupging.jupgingServer.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -31,13 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
         .authorizeRequests()
             .antMatchers("/auth/sign-in", "/auth/sign-up", "/news", "/shop").permitAll()
-            .anyRequest().permitAll()
-            //.anyRequest().authenticated()
-            .and()
-            .addFilterBefore(
-                new JwtFilter(jwtProvider),
-                UsernamePasswordAuthenticationFilter.class
-            );
+            .anyRequest().permitAll();
+//            .anyRequest().authenticated();
     }
 
     @Override
@@ -49,15 +44,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**");
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//    }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+//    @Bean
+//    @Override
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
 }
 

@@ -18,18 +18,18 @@ public class LikeService {
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
 
-    public boolean like(Long userId, String fromUserName, PostLikeReq postLikeReq){
-        User fromUser = userRepository.findByName(fromUserName)
-            .orElseThrow();
-        User user = userRepository.findById(userId)
-            .orElseThrow();
-
-        Like like = likeRepository.findByUserIdAndUserId(userId, fromUser.getId())
-                        .map(Like::update).orElse(Like.of(fromUser));
-
-        like.setUser(user);
-        user.updateLikeCount(postLikeReq.getIsLike());
-        likeRepository.save(like);
-        return like.getLikeState();
-    }
+//    public boolean like(Long userId, String fromUserName, PostLikeReq postLikeReq){
+//        User fromUser = userRepository.findByName(fromUserName)
+//            .orElseThrow();
+//        User user = userRepository.findById(userId)
+//            .orElseThrow();
+//
+//        Like like = likeRepository.findByUserIdAndUserId(userId, fromUser.getId())
+//                        .map(Like::update).orElse(Like.of(fromUser));
+//
+//        like.setUser(user);
+//        user.updateLikeCount(postLikeReq.getIsLike());
+//        likeRepository.save(like);
+//        return like.getLikeState();
+//    }
 }
