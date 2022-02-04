@@ -39,7 +39,8 @@ public class TrashcanController {
     @PostMapping("")
     public BaseResponse<PostTrashcanRes> postTrashcan(@Valid @RequestBody PostTrashcanReq postTrashcanReq) throws BaseException {
         // TODO : jwt 인증필요
-        PostTrashcanRes postTrashcanRes = trashcanService.saveTrashcan(postTrashcanReq);
+        Long userId = 1L;
+        PostTrashcanRes postTrashcanRes = trashcanService.saveTrashcan(userId, postTrashcanReq);
         return new BaseResponse<>(postTrashcanRes);
     }
 }
