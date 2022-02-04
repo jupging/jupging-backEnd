@@ -36,6 +36,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         User user = (User) authentication.getPrincipal();
         String accessToken = jwtProvider.createAccessToken(user.getId());
         String refreshToken = user.getRefreshToken();
+
+        // refreshToken을 보내는게 맞나? 안보내도 될거 같기도
+        // http://localhost:3000/oauth2/redirect?accessToken={jwt accessToken}?refreshToken={jwt refreshToken}
         return UriComponentsBuilder.fromUriString(targetUrl)
             .queryParam("accessToken", accessToken)
             .queryParam("refreshToken", refreshToken)
