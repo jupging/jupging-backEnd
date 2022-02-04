@@ -1,13 +1,18 @@
 package com.jupging.jupgingServer.user.service;
 
 import com.jupging.jupgingServer.auth.jwt.JwtProvider;
+import com.jupging.jupgingServer.common.BaseException;
+import com.jupging.jupgingServer.common.GCSuploader;
 import com.jupging.jupgingServer.user.domain.User;
 import com.jupging.jupgingServer.user.dto.*;
 import com.jupging.jupgingServer.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletException;
 import javax.transaction.Transactional;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Transactional
@@ -16,6 +21,9 @@ public class AuthService {
 
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
+    private final GCSuploader gcSuploader;
+
+    private static final String DIR_USER = "user";
 
     public SignInRes signIn(SignInReq signInReq) {
         User user = userRepository.findByEmail(signInReq.getEmail());
@@ -30,9 +38,11 @@ public class AuthService {
         return new SignInRes(user.getId(), accessToken, isNew);
     }
 
-    public SignUpRes signUp(Long userId, SignUpReq signUpReq) {
+    public SignUpRes signUp(Long userId, SignUpReq signUpReq) throws Exception {
         User user = userRepository.findById(userId).orElseThrow();
-        User updateUser = user.update(signUpReq.getNickName(), signUpReq.getProfile());
+
+       String profile = gcSuploader.uploadFile(signUpReq.getProfile(), DIR_USER);
+        User updateUser = user.update(signUpReq.getNickName(), profile);
         User saveUser = userRepository.save(updateUser);
 
         return new SignUpRes(saveUser.getId());

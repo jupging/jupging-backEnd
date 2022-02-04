@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @PutMapping("/sign-up")
-    public BaseResponse<SignUpRes> signUp(@RequestBody SignUpReq signUpReq) throws BaseException {
+    public BaseResponse<SignUpRes> signUp(@RequestBody SignUpReq signUpReq) throws Exception {
         Long userId = jwtProvider.getUserIdx();
         SignUpRes signUpRes = authService.signUp(userId, signUpReq);
         return new BaseResponse<>(signUpRes);
