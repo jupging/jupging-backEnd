@@ -1,6 +1,7 @@
 package com.jupging.jupgingServer.user.domain;
 
 import com.jupging.jupgingServer.common.BaseTimeEntity;
+import com.jupging.jupgingServer.like.domain.Like;
 import com.jupging.jupgingServer.user.domain.enums.GenderType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -42,14 +45,14 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private GenderType genderType;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    Set<Like> likes = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likeList = new ArrayList<>();
 
-//    @Transient
-//    private long likesCount;
-//
-//    @Transient
-//    private boolean likesState;
+    @Column(nullable = true)
+    private int likeCount = 0;
+
+    @Column(nullable = true)
+    private int level;
 
     public User(String name, String email, String picture, Float height, Float weight, GenderType genderType) {
         this.name = name;
@@ -72,6 +75,10 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
+    public void updateLevel(int level) {
+        this.level = level;
+    }
+
     public void update(String nickName, String profile,
                        Float height, Float weight, GenderType gender) {
         this.name = nickName;
@@ -81,11 +88,8 @@ public class User extends BaseTimeEntity {
         this.genderType = gender;
     }
 
-//    public void updateLikesCount(Long likesCount) {
-//        this.likesCount = likesCount;
-//    }
-//
-//    public void updateLikesState(boolean likesState) {
-//        this.likesState = likesState;
-//    }
+    public void updateLikeCount(Boolean isLike) {
+        if(isLike) this.likeCount += 1;
+        else if (this.likeCount > 0) this.likeCount -= 1;
+    }
 }

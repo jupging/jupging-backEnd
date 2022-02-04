@@ -5,19 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import java.util.List;
 
 @Getter
 @Setter
 public class GetBadgeRes {
-    Long badgeId;
-    String badgeName;
-    String badgeDescription;
-    String badgeImage;
+    List<Integer> badgeList;
 
-    public GetBadgeRes(Badge badge) {
-        this.badgeId = badge.getId();
-        this.badgeName = badge.getTitle();
-        this.badgeDescription = badge.getDescription();
-        this.badgeImage = badge.getImage();
+    public GetBadgeRes(List<Integer> badgeList) {
+        this.badgeList = badgeList;
     }
 }
