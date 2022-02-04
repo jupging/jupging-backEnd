@@ -5,6 +5,7 @@ import com.jupging.jupgingServer.badge.repository.BadgeRepository;
 import com.jupging.jupgingServer.plogging.domain.Plogging;
 import com.jupging.jupgingServer.plogging.repository.PloggingRepository;
 import com.jupging.jupgingServer.plogging.service.PloggingService;
+import com.jupging.jupgingServer.trashcan.repository.TrashcanRepository;
 import com.jupging.jupgingServer.user.domain.User;
 import com.jupging.jupgingServer.user.domain.enums.GenderType;
 import com.jupging.jupgingServer.user.dto.GetUserInfoRes;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,6 +28,7 @@ public class UserService {
     private final BadgeRepository badgeRepository;
     private final PloggingRepository ploggingRepository;
     private final PloggingService ploggingService;
+    private final TrashcanRepository trashcanRepository;
 
     public void putUserInfo(Long userId, PutUserInfoReq req) {
         User user = userRepository.findById(userId)
@@ -41,15 +42,16 @@ public class UserService {
             req.getHeight(), req.getWeight(), gender);
     }
 
-    public GetUserInfoRes getUserInfo(User user) {
+    public GetUserInfoRes getUserInfo(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
         List<Plogging> ploggingList = ploggingRepository.findByUserId(user.getId());
         List<Badge> badgeList = badgeRepository.findByUserId(user.getId());
 
         int level = checkedLevel(ploggingList);
-        checkedBadge(user, ploggingList, badgeList);
+        List<Integer> badges = checkedBadge(user, ploggingList, badgeList);
         user.updateLevel(level);
 
-        return new GetUserInfoRes(user, ploggingList, badgeList);
+        return new GetUserInfoRes(user, ploggingList, badges);
     }
 
     public int checkedLevel(List<Plogging> ploggingList) {
@@ -70,7 +72,7 @@ public class UserService {
 
     public List<Integer> checkedBadge(User user, List<Plogging> ploggingList, List<Badge> badgeList) {
         List<Integer> badges= new ArrayList<>(
-            Collections.nCopies(9, 0));
+            Collections.nCopies(11, 0));
 
         int count = 0;
         for(Plogging plogging : ploggingList) {
@@ -78,11 +80,14 @@ public class UserService {
                 count += 1;
         }
 
-        Double totalDistance = ploggingService.getPloggingStat(user.getId()).totalDistance()
+        Double totalDistance = ploggingService.getPloggingStat(user.getId()).getTotalDistance();
+        Integer trashcanCnt = trashcanRepository.findByUserId(user.getId()).size();
 
         if (count > 0) insertBadge(0, badges);
         if (count > 9) insertBadge(1, badges);
         if (count > 99) insertBadge(2, badges);
+        if (trashcanCnt > 9) insertBadge(3, badges);
+        if (trashcanCnt > 29) insertBadge(4, badges);
         if (totalDistance > 1100) insertBadge(5, badges);
         if (totalDistance > 42000) insertBadge(6, badges);
         if (user.getLikeCount() > 9) insertBadge(7, badges);

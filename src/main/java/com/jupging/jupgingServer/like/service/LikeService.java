@@ -18,7 +18,9 @@ public class LikeService {
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
 
-    public boolean like(Long userId, User fromUser, PostLikeReq postLikeReq){
+    public boolean like(Long userId, String fromUserName, PostLikeReq postLikeReq){
+        User fromUser = userRepository.findByName(fromUserName)
+            .orElseThrow();
         User user = userRepository.findById(userId)
             .orElseThrow();
 

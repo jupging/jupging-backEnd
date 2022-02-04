@@ -22,15 +22,15 @@ public class AuthController {
     }
 
     @PutMapping("/sign-up")
-    public BaseResponse<SignUpRes> signUp(@RequestBody SignUpReq signUpReq, @LoginUser User user) {
+    public BaseResponse<SignUpRes> signUp(@RequestBody SignUpReq signUpReq, @LoginUser String name) {
         // TODO : JWT 인증
-        SignUpRes signUpRes = authService.signUp(user, signUpReq);
+        SignUpRes signUpRes = authService.signUp(name, signUpReq);
         return new BaseResponse<>(signUpRes);
     }
 
     @DeleteMapping("/sign-out")
-    public BaseResponse<SignOutRes> signOut(@LoginUser User user) {
-        SignOutRes signOutRes = authService.signOut(user);
+    public BaseResponse<SignOutRes> signOut(@LoginUser String name) {
+        SignOutRes signOutRes = authService.signOut(name);
         return new BaseResponse<>(signOutRes);
     }
 }

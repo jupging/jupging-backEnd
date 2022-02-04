@@ -21,13 +21,13 @@ public class GetUserInfoRes {
     int level;
     List<Plogging> ploggingList;
     int likeCount;
-    List<Badge> badgeList;
+    List<Integer> badgeList;
     float height;
     float weight;
     String gender;
 
     public GetUserInfoRes(User user, List<Plogging> ploggingList,
-                          List<Badge> badgeList) {
+                          List<Integer> badgeList) {
         this.nickName = user.getNickName();
         this.profile = user.getPicture();
         this.level = user.getLevel();

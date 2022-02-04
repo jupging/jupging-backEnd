@@ -31,14 +31,16 @@ public class AuthService {
         return new SignInRes(user.getId(), accessToken, isNew);
     }
 
-    public SignUpRes signUp(User user, SignUpReq signUpReq) {
+    public SignUpRes signUp(String name, SignUpReq signUpReq) {
+        User user = userRepository.findByName(name).orElseThrow();
         User updateUser = user.update(signUpReq.getNickName(), signUpReq.getProfile());
         User saveUser = userRepository.save(updateUser);
 
         return new SignUpRes(saveUser.getId());
     }
 
-    public SignOutRes signOut(User user) {
+    public SignOutRes signOut(String name) {
+        User user = userRepository.findByName(name).orElseThrow();
         userRepository.delete(user);
         return new SignOutRes(userRepository.findAll());
     }

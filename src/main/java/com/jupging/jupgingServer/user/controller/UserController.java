@@ -23,9 +23,9 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/info")
-    public BaseResponse<GetUserInfoRes> getUserInfo(@PathVariable Long userId, @LoginUser User user) {
+    public BaseResponse<GetUserInfoRes> getUserInfo(@PathVariable Long userId, @LoginUser String userName) {
         // @LoginUser가 정상작동 된다면 userId, user.getId() 값이 똑같아야 됨.
-        GetUserInfoRes getUserInfoRes = userService.getUserInfo(user);
+        GetUserInfoRes getUserInfoRes = userService.getUserInfo(userId);
         return new BaseResponse<>(getUserInfoRes);
     }
 
