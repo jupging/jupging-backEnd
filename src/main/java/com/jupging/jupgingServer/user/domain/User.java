@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,13 +17,13 @@ import javax.persistence.*;
 public class User extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String email;
 
     @Column(nullable = true)
@@ -38,8 +39,14 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private GenderType genderType;
 
-    @Column(nullable = true)
-    private String refreshToken;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    Set<Like> likes = new HashSet<>();
+
+    @Transient
+    private long likesCount;
+
+    @Transient
+    private boolean likesState;
 
     @Builder
     public User(String name, String email, String picture) {
@@ -55,7 +62,20 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
-    public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+    public void update(String nickName, String profile,
+                       Float height, Float weight, GenderType gender) {
+        this.name = nickName;
+        this.picture = profile;
+        this.height = height;
+        this.weight = weight;
+        this.genderType = gender;
+    }
+
+    public void updateLikesCount(Long likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public void updateLikesState(boolean likesState) {
+        this.likesState = likesState;
     }
 }

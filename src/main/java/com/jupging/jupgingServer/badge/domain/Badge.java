@@ -27,7 +27,7 @@ public class Badge extends BaseTimeEntity {
     @Column(nullable = false)
     private String Image;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }
