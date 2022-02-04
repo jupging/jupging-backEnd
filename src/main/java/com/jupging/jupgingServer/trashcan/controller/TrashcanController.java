@@ -1,5 +1,6 @@
 package com.jupging.jupgingServer.trashcan.controller;
 
+import com.jupging.jupgingServer.auth.jwt.JwtProvider;
 import com.jupging.jupgingServer.common.BaseException;
 import com.jupging.jupgingServer.common.BaseResponse;
 import com.jupging.jupgingServer.trashcan.dto.GetTrashcanRes;
@@ -18,6 +19,7 @@ import java.util.List;
 public class TrashcanController {
 
     private final TrashcanServiceImpl trashcanService;
+    private final JwtProvider jwtProvider;
 
     /**
      * 쓰레기통 조회 API
@@ -25,8 +27,8 @@ public class TrashcanController {
      * 개발자 : 홍민주
      */
     @GetMapping("")
-    public BaseResponse<List<GetTrashcanRes>> getTrashcan(){
-        // TODO : jwt 인증필요
+    public BaseResponse<List<GetTrashcanRes>> getTrashcan() throws Exception{
+        Long userId = jwtProvider.getUserIdx();
         List<GetTrashcanRes> trashcanList = trashcanService.findTrashcans();
         return new BaseResponse<>(trashcanList);
     }
@@ -38,8 +40,7 @@ public class TrashcanController {
      */
     @PostMapping("")
     public BaseResponse<PostTrashcanRes> postTrashcan(@Valid @RequestBody PostTrashcanReq postTrashcanReq) throws BaseException {
-        // TODO : jwt 인증필요
-        Long userId = 1L;
+        Long userId = jwtProvider.getUserIdx();
         PostTrashcanRes postTrashcanRes = trashcanService.saveTrashcan(userId, postTrashcanReq);
         return new BaseResponse<>(postTrashcanRes);
     }

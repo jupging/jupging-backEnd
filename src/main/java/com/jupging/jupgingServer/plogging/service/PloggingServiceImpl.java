@@ -32,7 +32,8 @@ public class PloggingServiceImpl implements PloggingService{
     private static final String DIR_TRASH = "trash";
 
     @Override
-    public PostPloggingRes savePlogging(User user, PostPloggingReq postPloggingReq) throws Exception {
+    public PostPloggingRes savePlogging(Long userId, PostPloggingReq postPloggingReq) throws Exception {
+        User user = userRepository.findById(userId).orElseThrow();
         String routeImage = GCSuploader.uploadFile(postPloggingReq.getRouteImage(), DIR_PLOGGING);
         String trashImage = GCSuploader.uploadFile(postPloggingReq.getTrashImage(), DIR_TRASH);
         Plogging newPlogging = createPlogging(user, routeImage, trashImage, postPloggingReq);
@@ -50,8 +51,8 @@ public class PloggingServiceImpl implements PloggingService{
     }
 
     @Override
-    public GetRankRes getRank(User user, String YearMonth, String sort) throws Exception{
-
+    public GetRankRes getRank(Long userId, String YearMonth, String sort) throws Exception{
+        User user = userRepository.findById(userId).orElseThrow();
         GetRankRes getRankRes = new GetRankRes();
         List<RankInfo> ploggingDtoList = new ArrayList<>();
         getRankRes.setRankList(ploggingDtoList);
