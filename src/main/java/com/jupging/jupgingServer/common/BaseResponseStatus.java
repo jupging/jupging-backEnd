@@ -37,6 +37,7 @@ public enum BaseResponseStatus {
     DATABASE_ERROR(false, 4000, "데이터베이스 연결에 실패하였습니다."),
     SERVER_ERROR(false, 4001, "서버와의 연결에 실패하였습니다."),
     DUPLICATE_KEY_ERROR(false, 4002, "이미 존재하는 row입니다."),
+    EMPTY_USER(false, 4003, "user를 찾지 못했습니다."),
 
 
     /**

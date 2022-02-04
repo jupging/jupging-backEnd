@@ -1,15 +1,16 @@
 package com.jupging.jupgingServer.plogging.controller;
 
 import com.jupging.jupgingServer.common.BaseResponse;
-import com.jupging.jupgingServer.plogging.dto.GetRankRes;
-import com.jupging.jupgingServer.plogging.dto.PostPloggingReq;
-import com.jupging.jupgingServer.plogging.dto.PostPloggingRes;
+import com.jupging.jupgingServer.plogging.dto.*;
 import com.jupging.jupgingServer.plogging.service.PloggingServiceImpl;
 import com.jupging.jupgingServer.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,6 +18,8 @@ import javax.validation.Valid;
 public class PloggingController {
 
     private final PloggingServiceImpl ploggingService;
+    private static final String YEAR_MONTH_FORMAT = "yyyy-MM";
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern(YEAR_MONTH_FORMAT);
 
     /**
      * 플로깅 기록 추가 API
@@ -35,10 +38,11 @@ public class PloggingController {
      * [GET] /ploggings/ranks
      * 개발자 : 홍민주
      */
-    @PostMapping("")
+    @GetMapping("/rank")
     public BaseResponse<GetRankRes> getPloggingRank(@RequestParam String sort) throws Exception{
         User user = null; // TODO : jwt 확인 예정
-        GetRankRes getRankRes = ploggingService.getRank(user, postPloggingReq);
+        String YearMonth = LocalDateTime.now().format(dtf);
+        GetRankRes getRankRes = ploggingService.getRank(user, YearMonth, sort);
         return new BaseResponse<>(getRankRes);
     }
 }
