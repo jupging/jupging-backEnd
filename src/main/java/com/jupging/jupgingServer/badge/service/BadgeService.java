@@ -23,7 +23,7 @@ public class BadgeService {
     private final BadgeRepository badgeRepository;
     private final UserRepository userRepository;
 
-    public GetBadgeRes findBadge(Long userId) {
+    public GetBadgeRes getBadge(Long userId) {
         List<Badge> badgeList = badgeRepository.findByUserId(userId);
         List<Integer> badges= new ArrayList<>(
             Collections.nCopies(11, 0));

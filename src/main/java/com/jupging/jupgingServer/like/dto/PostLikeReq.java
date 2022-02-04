@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 @NoArgsConstructor
 public class PostLikeReq {
-    User fromUser;
+    Long userId;
     Boolean isLike;
 
-    public PostLikeReq(User fromUser, Boolean isLike) {
-        this.fromUser = fromUser;
+    public PostLikeReq(Long userId, Boolean isLike) {
+        this.userId = userId;
         this.isLike = isLike;
     }
 }
