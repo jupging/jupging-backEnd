@@ -43,8 +43,9 @@ public enum BaseResponseStatus {
      * 5000 : File 오류
      */
     FILE_CONVERT_ERROR(false, 5000, "file 변환에 실패하였습니다."),
-    FILE_EMPTY(false, 5001, "file이 없습니다.");
-
+    FILE_EMPTY(false, 5001, "file이 없습니다."),
+    GCS_ERROR(false, 5002, "GCS통신 오류"),
+    FILE_EXTENSION_ERROR(false, 5003, "file 확장자를 확인해주세요.");
 
     private final boolean isSuccess;
     private final int code;

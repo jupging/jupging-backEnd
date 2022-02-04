@@ -26,7 +26,6 @@ public class PloggingController {
      */
     @PostMapping("")
     public BaseResponse<PostPloggingRes> postPlogging(@ModelAttribute PostPloggingReq postPloggingReq) throws Exception{
-        // TODO : ServletException, GoogleJsonResponseException 예외 처리 (merge후 ControllerAdvice에서 예외처리할 예정)
         User user = null; // TODO : jwt 확인 예정
         PostPloggingRes postPloggingRes = ploggingService.savePlogging(user, postPloggingReq);
         return new BaseResponse<>(postPloggingRes);
