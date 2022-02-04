@@ -1,10 +1,11 @@
 package com.jupging.jupgingServer.user.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 @Getter
-@Service
+@Setter
 public class PutUserInfoReq {
     String nickName;
     String profile;

@@ -2,10 +2,8 @@ package com.jupging.jupgingServer.user.service;
 
 import com.jupging.jupgingServer.auth.jwt.JwtProvider;
 import com.jupging.jupgingServer.user.domain.User;
-import com.jupging.jupgingServer.user.dto.RefreshTokenReq;
 import com.jupging.jupgingServer.user.dto.SignUpReq;
 import com.jupging.jupgingServer.user.dto.SignUpRes;
-import com.jupging.jupgingServer.user.dto.TokenRes;
 import com.jupging.jupgingServer.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

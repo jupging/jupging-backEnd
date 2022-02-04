@@ -1,6 +1,5 @@
 package com.jupging.jupgingServer.user.domain;
 
-import com.jupging.jupgingServer.like.entity.Like;
 import com.jupging.jupgingServer.common.BaseTimeEntity;
 import com.jupging.jupgingServer.user.domain.enums.GenderType;
 import lombok.AllArgsConstructor;
@@ -9,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Getter
 @AllArgsConstructor
@@ -40,8 +39,8 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private GenderType genderType;
 
-    @OneToMany(mappedBy = "user")
-    private List<Like> likeList;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    Set<Like> likes = new HashSet<>();
 
     @Transient
     private long likesCount;
