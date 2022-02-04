@@ -51,29 +51,43 @@ public class PloggingServiceImpl implements PloggingService{
 
     @Override
     public GetRankRes getRank(User user, String YearMonth, String sort) throws Exception{
-        int userIdx = -1;
+
         GetRankRes getRankRes = new GetRankRes();
         List<RankInfo> ploggingDtoList = new ArrayList<>();
-
         getRankRes.setRankList(ploggingDtoList);
+        // myRank 초기화
         getRankRes.setMyRank(new RankInfo(-1, user.getId(), user.getName(), user.getPicture()));
 
+        int userIdx = -1;
         List<RankInfoProjection> ploggingList = ploggingRepository.findPloggingRankByCreatedDateWithPagination(YearMonth, PageRequest.of(0, 50, Sort.Direction.DESC, sort));
-        for (int idx = 0; idx<ploggingList.size(); idx++){
+        for (int idx = 0; idx < ploggingList.size(); idx++){
+            // 1등부터 차례대로 돌면서 ploggingDtoList에 추가
             RankInfoProjection projection = ploggingList.get(idx);
             Optional<User> optionalRunner = userRepository.findById(projection.getUserId());
+
+            // plogging 주인 User를 찾을 수 없음
             if (optionalRunner.isEmpty())
                 throw new BaseException(EMPTY_USER);
+
             User runner = optionalRunner.get();
+            // ploggingDtoList에 추가하기 위한 RankInfo 생성
             RankInfo rank = new RankInfo(idx + 1,runner.getId(), runner.getName(), runner.getPicture(), projection.getCnt().intValue(), projection.getDistance());
             ploggingDtoList.add(rank);
+
+            // 만약 자신의 plogging rank인 경우 저장
             if (user.getId() == projection.getUserId())
                 userIdx = idx;
         }
         if (userIdx != -1) {
+            // ploggingDtoList에 자신의 plogging rank가 존재하는 경우 myRank 갱신
             RankInfoProjection projection = ploggingList.get(userIdx);
             getRankRes.setMyRank(userIdx + 1, projection.getCnt().intValue(),  projection.getDistance() );
         }
         return getRankRes;
+    }
+
+    @Override
+    public GetPloggingStatRes getPloggingStat(Long userId){
+
     }
 }

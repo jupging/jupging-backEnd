@@ -11,4 +11,5 @@ public interface PloggingService {
     public PostPloggingRes savePlogging(User user, PostPloggingReq postPloggingReq) throws Exception;
     public Plogging createPlogging(User runner, String routeImage, String trashImage, PostPloggingReq postPloggingReq) throws Exception;
     public GetRankRes getRank(User user, String YearMonth, String sort) throws Exception;
+    public GetPloggingStatRes getPloggingStat(Long userId);
 }
