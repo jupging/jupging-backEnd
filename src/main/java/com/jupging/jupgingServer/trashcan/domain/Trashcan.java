@@ -1,5 +1,6 @@
 package com.jupging.jupgingServer.trashcan.domain;
 
+import com.jupging.jupgingServer.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,8 +24,13 @@ public class Trashcan {
     @Column(nullable = false)
     private Double longitude;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
-    public Trashcan(Double latitude, Double longitude){
+    public Trashcan(User user, Double latitude, Double longitude){
+        this.user = user;
         this.latitude = latitude;
         this.longitude = longitude;
     }
