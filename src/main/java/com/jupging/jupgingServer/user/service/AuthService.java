@@ -41,8 +41,8 @@ public class AuthService {
     public SignUpRes signUp(Long userId, SignUpReq signUpReq) throws Exception {
         User user = userRepository.findById(userId).orElseThrow();
 
-       String profile = gcSuploader.uploadFile(signUpReq.getProfile(), DIR_USER);
-        User updateUser = user.update(signUpReq.getNickName(), profile);
+       //String profile = gcSuploader.uploadFile(signUpReq.getProfile(), DIR_USER);
+        User updateUser = user.update(signUpReq.getNickName(), signUpReq.getProfile());
         User saveUser = userRepository.save(updateUser);
 
         return new SignUpRes(saveUser.getId());
