@@ -10,9 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class SignUpReq {
     String nickName;
-    MultipartFile profile;
+    // MultipartFile profile;
+    String profile;
 
-    public SignUpReq(String nickName, MultipartFile profile) {
+    public SignUpReq(String nickName, String profile) {
         this.nickName = nickName;
         this.profile = profile;
     }
