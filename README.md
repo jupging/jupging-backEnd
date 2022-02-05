@@ -1,11 +1,11 @@
 ### 목차
 1. [🗓️ 서비스 소개](#%EF%B8%8F-서비스-소개)
 2. [🌞 Flow](#flow)
-3. [⏰ 개발 기간](#-개발-기간-20220108--20220123)
+3. [⏰ 개발 기간](#-개발-기간-20220121--20220205)
 4. [✨ 주요기능 소개](#-주요기능-소개)
 5. [🛠️ 기술스택](#%EF%B8%8F-기술스택)
 6. [✏️ 기획 및 설계](#%EF%B8%8F-기획-및-설계)
-7. [👨‍👩‍👦‍👦 팀원 소개](#-팀-소개-휴게소-직원들)
+7. [👨‍👩‍👦‍👦 팀원 소개](#-팀-소개-Plocka)
 ---
 # 2022 GDSC KR Winter Hack
 [💻 해커톤 설명페이지](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/bcd83556-b931-41e1-8497-ec08c1bfda82/Info_Brochure.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220204%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220204T204721Z&X-Amz-Expires=86400&X-Amz-Signature=be1011cba05c0cfe25461ef1428b506b5e2719966b01cdfbb4cdf32884eae9b4&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Info%2520Brochure.pdf%22&x-id=GetObject)
