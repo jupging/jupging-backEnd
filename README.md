@@ -15,6 +15,10 @@
 
 ![](https://user-images.githubusercontent.com/70425378/152608852-448ccabd-9135-4ccc-96df-862bd6796ee8.JPG)
 
+Try with this QR in Expo Go
+![image](https://user-images.githubusercontent.com/86418674/152626203-e77ee5ec-ff61-4a39-8194-54cc6061a3e8.png)
+
+
 # 	🌍 지구도 지키고 건강도 지키자! 줍깅 🌍
 
 ##  🌼 우리 모두의 지구를 위해 함께 플로깅 해요 🌼
